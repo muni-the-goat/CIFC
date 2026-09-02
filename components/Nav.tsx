@@ -6,6 +6,20 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { nav, site } from "@/lib/content";
 
+/* Duplicates the label and slides the stack one line on hover, so the
+   copy replaces the original. The second copy is aria-hidden — it is
+   the same word, and screen readers should not hear it twice. */
+function Roll({ children }: { children: string }) {
+  return (
+    <span className="roll">
+      <span className="roll__track">
+        <span className="roll__line">{children}</span>
+        <span className="roll__line" aria-hidden="true">{children}</span>
+      </span>
+    </span>
+  );
+}
+
 function Arrow() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -42,7 +56,7 @@ export default function Nav() {
     if (!heroEl) { setOverHero(false); return; }
     const io = new IntersectionObserver(
       ([entry]) => setOverHero(entry.isIntersecting),
-      { rootMargin: "-72px 0px 0px 0px", threshold: 0 }
+      { rootMargin: "-88px 0px 0px 0px", threshold: 0 }
     );
     io.observe(heroEl);
     return () => io.disconnect();
@@ -117,14 +131,17 @@ export default function Nav() {
             <span className={`nav__glyph${open ? " nav__glyph--close" : ""}`} aria-hidden="true">
               <span /><span />
             </span>
-            {open ? "Close" : "Menu"}
+            <Roll>{open ? "Close" : "Menu"}</Roll>
           </button>
 
           <Link href="/" className="nav__logo" aria-label={`${site.name} — home`}>
-            <Image src="/cifc-logo.png" alt={site.name} width={112} height={40} priority sizes="112px" />
+            <Image src="/cifc-logo.png" alt={site.name} width={129} height={46} priority sizes="129px" />
           </Link>
 
-          <Link href="/contact-us" className="nav__cta">Connect <Arrow /></Link>
+          <Link href="/contact-us" className="nav__cta">
+            <Roll>Connect</Roll>
+            <Arrow />
+          </Link>
         </div>
       </header>
 

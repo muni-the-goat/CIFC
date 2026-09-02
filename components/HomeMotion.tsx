@@ -55,6 +55,31 @@ export default function HomeMotion() {
         0.65
       );
 
+    /* --- Parallax ------------------------------------------------
+       The photograph drifts against the scroll. Scale first so the
+       travel never exposes an edge. Purely decorative: if this never
+       runs, object-fit still covers the section. */
+    const featureImg = document.querySelector(".feature__img");
+    if (featureImg) {
+      tweens.push(
+        gsap.fromTo(
+          featureImg,
+          { yPercent: -9, scale: 1.2 },
+          {
+            yPercent: 9,
+            scale: 1.2,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".feature",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.6,
+            },
+          }
+        )
+      );
+    }
+
     /* --- Scroll reveals ----------------------------------------- */
     revealables.forEach((el) => {
       const stagger = el.hasAttribute("data-anim-stagger");

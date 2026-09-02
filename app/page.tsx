@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import HeroGradient from "@/components/HeroGradient";
 import HomeMotion from "@/components/HomeMotion";
-import { hero, whoWeAre, principles, sectors, news } from "@/lib/content";
+import SectorGrid from "@/components/SectorGrid";
+import { hero, whoWeAre, principles, news, imagery } from "@/lib/content";
 
 export default function Home() {
   return (
@@ -37,19 +39,37 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="container section">
-        <p className="lede hero__displaced" data-anim>{hero.body}</p>
-        <div className="intro__actions" data-anim>
-          <Link href="/portfolio" className="btn btn--primary">Explore the portfolio</Link>
-          <Link href="/contact-us" className="btn btn--ghost">Get in touch</Link>
+      <section className="section intro">
+        {/* Decorative: empty alt + aria-hidden so it is not announced. */}
+        <Image
+          src="/cifc-mark.png"
+          alt=""
+          aria-hidden="true"
+          width={845}
+          height={714}
+          className="intro__mark"
+        />
+        <div className="container intro__inner">
+          <p className="lede hero__displaced" data-anim>{hero.body}</p>
+          <div className="intro__actions" data-anim>
+            <Link href="/portfolio" className="btn btn--primary">Explore the portfolio</Link>
+            <Link href="/contact-us" className="btn btn--ghost">Get in touch</Link>
+          </div>
         </div>
       </section>
 
-      <section className="container section">
-        <p className="eyebrow" data-anim>Who we are</p>
-        <p style={{ fontSize: "var(--text-xl)", maxWidth: "70ch", marginTop: "var(--space-6)" }}>
-          {whoWeAre}
-        </p>
+      <section className="feature">
+        <Image
+          src={imagery.kohPich.src}
+          alt={imagery.kohPich.alt}
+          fill
+          sizes="100vw"
+          className="feature__img"
+        />
+        <div className="container feature__inner">
+          <h2 className="feature__label" data-anim>Who we are</h2>
+          <p className="feature__copy" data-anim>{whoWeAre}</p>
+        </div>
       </section>
 
       <section className="container section">
@@ -66,14 +86,7 @@ export default function Home() {
 
       <section className="container section">
         <h2 data-anim>Where we invest</h2>
-        <div className="grid grid--3" data-anim data-anim-stagger style={{ marginTop: "var(--space-12)" }}>
-          {sectors.map((s) => (
-            <article key={s.name} className="card">
-              <h3>{s.name}</h3>
-              <p>{s.tagline}</p>
-            </article>
-          ))}
-        </div>
+        <SectorGrid />
       </section>
 
       <section className="container section">

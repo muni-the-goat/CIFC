@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { sectors, portfolio } from "@/lib/content";
+import Image from "next/image";
+import SectorGrid from "@/components/SectorGrid";
+import { portfolio } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -24,23 +26,32 @@ export default function Portfolio() {
 
       <section className="container section">
         <h2>Backing bold solutions creating real impact</h2>
-        <div className="grid grid--3" style={{ marginTop: "var(--space-12)" }}>
-          {sectors.map((s) => (
-            <article key={s.name} className="card">
-              <h3>{s.name}</h3>
-              <p>{s.tagline}</p>
-            </article>
-          ))}
-        </div>
+        <SectorGrid />
       </section>
 
       <section className="container section">
         <h2>Portfolio companies</h2>
         <div className="grid grid--3" style={{ marginTop: "var(--space-12)" }}>
           {portfolio.map((c) => (
-            <a key={c.name} href={c.url} target="_blank" rel="noreferrer noopener" className="card">
-              <h3>{c.name}</h3>
-              <p>{c.sector}</p>
+            <a
+              key={c.name}
+              href={c.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="holding"
+            >
+              <Image
+                src={c.logo}
+                alt={`${c.name} logo`}
+                width={200}
+                height={89}
+                sizes="200px"
+                className="holding__logo"
+              />
+              <div>
+                <h3>{c.name}</h3>
+                <p>{c.sector}</p>
+              </div>
             </a>
           ))}
         </div>

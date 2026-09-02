@@ -31,6 +31,13 @@ export const hero = {
     "Canadia Impact Fund fuels innovation, sustainability, and social transformation by investing in ventures that drive long-term impact for Cambodia. From startups to green development and frontier technologies like AI, we empower ideas that shape tomorrow.",
 };
 
+export const imagery = {
+  kohPich: {
+    src: "/koh-pich-aerial.webp",
+    alt: "Aerial view of Koh Pich (Diamond Island), Phnom Penh, where the Bassac meets the Mekong — high-rise development along the riverfront",
+  },
+};
+
 export const whoWeAre =
   "Canadia Impact Fund is established under Canadia Group, focusing on impact-driven investments that combine financial growth with positive societal outcomes. By understanding global and local markets, our vision is to foster sustainable urban development, digital transformation, and inclusive growth for Cambodia and beyond.";
 
@@ -50,18 +57,61 @@ export const stats = [
   { value: "100+", label: "Investment in Companies" },
 ];
 
-export const sectors = [
-  { name: "Healthcare",      tagline: "Advancing care through innovation" },
-  { name: "Biotech",         tagline: "Transforming science into solutions" },
+/* Alt text describes what is actually in each frame. The live site
+   shipped architecture-template alt on an investment site, or none at
+   all — see the audit's T7/T8. */
+export const sectors: {
+  name: string;
+  tagline: string;
+  image?: string;
+  alt?: string;
+}[] = [
+  {
+    name: "Healthcare",
+    tagline: "Advancing care through innovation",
+    image: "/sector-healthcare.webp",
+    alt: "Clinical staff at Intercare Hospital reviewing patient notes together on a ward",
+  },
+  {
+    name: "Biotech",
+    tagline: "Transforming science into solutions",
+    image: "/sector-biotech.jpg",
+    alt: "Laboratory research work in progress",
+  },
   // NOTE: live site reads "Building a greener guiture" — typo corrected.
-  { name: "Sustainable Tech", tagline: "Building a greener future" },
-  { name: "Education",       tagline: "Empowering minds for progress" },
-  { name: "AI",              tagline: "Intelligence powering human potential" },
-  { name: "Logistics",       tagline: "Connecting markets with efficiency" },
+  {
+    name: "Sustainable Tech",
+    tagline: "Building a greener future",
+    image: "/sector-sustainable-tech.jpg",
+    alt: "Green technology and renewable energy infrastructure",
+  },
+  {
+    name: "Education",
+    tagline: "Empowering minds for progress",
+    image: "/canadian-international-school.webp",
+    alt: "The Canadian International School campus in Phnom Penh, its red and white facade fronted by a full-height glass atrium",
+  },
+  {
+    name: "AI",
+    tagline: "Intelligence powering human potential",
+    image: "/sector-ai.webp",
+    alt: "Abstract visualisation of artificial intelligence",
+  },
+  {
+    name: "Logistics",
+    tagline: "Connecting markets with efficiency",
+    image: "/jalat-mobile-hub.webp",
+    alt: "The Jalat Logistics team at their mobile hub, beside a branded delivery truck and handling trolleys",
+  },
 ];
 
 export const portfolio = [
-  { name: "Jalat Logistics", url: "https://www.jalatlogistics.info/", sector: "Logistics" },
+  {
+    name: "Jalat Logistics",
+    url: "https://www.jalatlogistics.info/",
+    sector: "Logistics",
+    logo: "/jalat-logo.png",
+  },
 ];
 
 export const team = [
