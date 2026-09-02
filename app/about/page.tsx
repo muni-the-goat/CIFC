@@ -21,22 +21,23 @@ export default function About() {
         lede="We partner with visionary entrepreneurs and organizations to create lasting social, environmental, and economic impact. By combining rigorous investment strategies with purpose-driven projects, we turn capital into measurable change, empowering communities and shaping a sustainable future for Cambodia and beyond."
       />
 
-      <section className="container section split">
-        <div>
-          <p className="eyebrow">Who we are</p>
-          <p className="split__copy">{whoWeAre}</p>
+      {/* Same treatment as the home page: this block runs the identical
+          copy, and two layouts for one paragraph read as two different
+          claims. No data-anim here — /about mounts no motion component,
+          so a gated reveal would strand the copy until the failsafe. */}
+      <section className="feature feature--night">
+        <Image
+          src={imagery.towerNight.src}
+          alt={imagery.towerNight.alt}
+          fill
+          sizes="100vw"
+          className="feature__img"
+          priority
+        />
+        <div className="container feature__inner">
+          <h2 className="feature__label">Who we are</h2>
+          <p className="feature__copy">{whoWeAre}</p>
         </div>
-        {/* The tower is the group's own landmark — the literal building
-            behind "established under Canadia Group". */}
-        <figure className="split__figure">
-          <Image
-            src={imagery.towerNight.src}
-            alt={imagery.towerNight.alt}
-            fill
-            sizes="(max-width: 880px) 100vw, 44vw"
-            className="split__img"
-          />
-        </figure>
       </section>
 
       <section className="container section">
@@ -44,18 +45,6 @@ export default function About() {
             90deg sweep, and a narrow measure compressed all three stops
             into a few words. */}
         <p className="mission gradient-text">{mission}</p>
-      </section>
-
-      {/* Full-bleed breath between the mission and the principles. No
-          copy over it, so it needs no scrim. */}
-      <section className="band" aria-hidden="true">
-        <Image
-          src={imagery.towerCrown.src}
-          alt=""
-          fill
-          sizes="100vw"
-          className="band__img"
-        />
       </section>
 
       <section className="container section">

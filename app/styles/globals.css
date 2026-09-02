@@ -139,12 +139,6 @@ select:focus-visible, textarea:focus-visible {
   align-items: center;
 }
 
-.split__copy {
-  font-size: var(--text-xl);
-  max-width: 60ch;
-  margin-top: var(--space-6);
-}
-
 /* Portrait crop: the tower is a vertical subject and the landscape
    source is mostly empty sky either side of it. */
 .split__figure {
@@ -173,19 +167,6 @@ select:focus-visible, textarea:focus-visible {
   .split__figure { aspect-ratio: 3 / 2; }
   .split--flip .split__figure { order: 2; }
 }
-
-/* --- Full-bleed image band -------------------------------------
-   Sits outside .container, so it spans the viewport on its own. No
-   copy over it, which is why it carries no scrim.
-   ------------------------------------------------------------ */
-
-.band {
-  position: relative;
-  isolation: isolate;
-  height: min(52dvh, 520px);
-  overflow: hidden;
-}
-.band__img { object-fit: cover; }
 
 /* --- Heritage row ----------------------------------------------
    4:3 cells, not portrait: the Apsara source is only 1024px wide and
@@ -977,6 +958,19 @@ html.preloaded .member {
 }
 
 .feature__inner { position: relative; z-index: 1; }
+
+/* The night tower needs almost none of that. It is already dark, and
+   the full scrim above flattened it to black. Weighted left, where the
+   copy sits, over a base light enough to keep the city lights alive. */
+.feature--night::after {
+  background:
+    linear-gradient(to right,
+      color-mix(in srgb, #16171A 66%, transparent) 0%,
+      color-mix(in srgb, #16171A 30%, transparent) 54%,
+      transparent 84%),
+    color-mix(in srgb, #16171A 14%, transparent);
+}
+
 
 /* A real section label, not a caption. It was losing to a 40px
    paragraph because it sat at 14px doing heading duty as a <p>. */
