@@ -5,19 +5,15 @@ out
 .DS_Store
 .env*
 !.env.example
-
-# Yellix TRIAL fonts — Displaay's trial licence forbids "sale, transfer
-# or distribution", so these must not be published to a public repo.
-# They are also unused: the site runs on the system-ui stack per the
-# brand guideline. Kept locally only.
-fonts/
-
-# Client brand guideline — confidential, not for public distribution.
-*.pdf
-
-# TypeScript build artifact
 tsconfig.tsbuildinfo
 
-# Internal audit / design-system notes — kept local, not published
+# Licensed font files — not redistributable, kept out of version control
+fonts/
+
+# Client-supplied source documents
+*.pdf
+
+# Internal working notes
 canadia-impact-fund-site-audit.md
 canadia-impact-fund-design-system.md
+CLAUDE.md
