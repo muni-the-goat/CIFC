@@ -17,5 +17,11 @@
     "paths": { "@/*": ["./*"] }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  // studio-cifc is a separate app with its own tsconfig and its own
+  // dependencies. Without it excluded, this project's include globs
+  // sweep the Studio into its typecheck, and on Vercel — where only
+  // the root package.json is installed — @sanity/vision cannot
+  // resolve and the build fails. It passes locally only because
+  // studio-cifc/node_modules happens to exist.
+  "exclude": ["node_modules", "studio-cifc"]
 }
