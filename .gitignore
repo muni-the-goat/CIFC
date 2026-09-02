@@ -32,3 +32,9 @@ public/Teams/
 /public/Canadia-Tower-skyline.HEIC
 /public/skyline.png
 /public/PhnomPenh-Independence-Monument.png
+
+# Agent skills: vendored third-party docs plus a symlink into them.
+# Tooling, not website code — skills-lock.json is committed so the
+# install is reproducible without carrying the payload.
+.agents/
+.claude/

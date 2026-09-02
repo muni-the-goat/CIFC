@@ -1,0 +1,105 @@
+import { defineArrayMember, defineField, defineType } from "sanity";
+import { InfoOutlineIcon } from "@sanity/icons/InfoOutline";
+
+export const aboutPage = defineType({
+  name: "aboutPage",
+  title: "About page",
+  type: "document",
+  icon: InfoOutlineIcon,
+  groups: [
+    { name: "hero", title: "Hero" },
+    { name: "body", title: "Body" },
+    { name: "heritage", title: "Heritage" },
+  ],
+  fields: [
+    defineField({
+      name: "heroLead",
+      title: "Hero — first line",
+      type: "string",
+      group: "hero",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "heroTail",
+      title: "Hero — second line",
+      type: "string",
+      group: "hero",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "heroLede",
+      title: "Hero lede",
+      type: "text",
+      rows: 4,
+      group: "hero",
+    }),
+    defineField({
+      name: "whoWeAre",
+      title: "Who we are",
+      type: "text",
+      rows: 6,
+      group: "body",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "whoWeAreImage",
+      title: "Who we are — background",
+      type: "captionedImage",
+      group: "body",
+    }),
+    defineField({
+      name: "mission",
+      title: "Mission statement",
+      description: "Set in the brand gradient, running the full measure.",
+      type: "text",
+      rows: 3,
+      group: "body",
+      validation: (rule) => rule.required().max(200),
+    }),
+    defineField({
+      name: "principles",
+      title: "Our approach",
+      type: "array",
+      of: [defineArrayMember({ type: "principle" })],
+      group: "body",
+    }),
+    defineField({
+      name: "stats",
+      title: "Canadia Group in numbers",
+      type: "array",
+      of: [defineArrayMember({ type: "stat" })],
+      group: "body",
+    }),
+    defineField({
+      name: "statsImage",
+      title: "Numbers — photograph",
+      type: "captionedImage",
+      group: "body",
+    }),
+    defineField({
+      name: "heritageHeading",
+      title: "Heritage heading",
+      type: "string",
+      group: "heritage",
+      initialValue: "Rooted in Cambodia",
+    }),
+    defineField({
+      name: "heritageLede",
+      title: "Heritage lede",
+      type: "text",
+      rows: 3,
+      group: "heritage",
+    }),
+    defineField({
+      name: "heritageImages",
+      title: "Heritage images",
+      description:
+        "Three cells, 4:3. Ordered ancient to modern, matching the lede.",
+      type: "array",
+      of: [defineArrayMember({ type: "captionedImage" })],
+      group: "heritage",
+      validation: (rule) => rule.max(4),
+    }),
+  ],
+  preview: { prepare: () => ({ title: "About page" }) },
+});
