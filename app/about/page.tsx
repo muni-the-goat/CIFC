@@ -3,6 +3,7 @@ import Image from "next/image";
 import PageHero from "@/components/PageHero";
 import { whoWeAre, mission, principles, stats, imagery, heritage } from "@/lib/content";
 import Faq from "@/components/Faq";
+import CountUp from "@/components/CountUp";
 
 export const metadata: Metadata = {
   title: "About",
@@ -113,7 +114,9 @@ export default function About() {
           <div className="stats-stack">
             {stats.map((s) => (
               <div key={s.label}>
-                <p className="stat__value">{s.value}</p>
+                <p className="stat__value">
+                  <CountUp value={s.value} />
+                </p>
                 <p className="stat__label">{s.label}</p>
               </div>
             ))}

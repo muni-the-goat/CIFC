@@ -52,16 +52,9 @@ export const imagery = {
   },
 };
 
-/* Heritage row on /about. Ancient Khmer craft to the modern skyline, in
-   that order — the fund's own framing of Cambodia's continuity.
-   NOTE: the Angkor Wat source was cropped to drop a dense band of
-   tourists across the foreground; the temple silhouette is untouched. */
+/* Heritage row on /about. Ordered to match the section lede: the
+   temples of Angkor, then living tradition, then the modern skyline. */
 export const heritage = [
-  {
-    src: "/angkor-wat.webp",
-    alt: "Sunrise over Angkor Wat, the central tower silhouetted against an orange sky behind a line of sugar palms",
-    caption: "Angkor Wat, Siem Reap",
-  },
   {
     src: "/bayon.webp",
     alt: "The stone face towers of the Bayon temple at Angkor Thom, lit low against a clouded sky",
@@ -71,6 +64,11 @@ export const heritage = [
     src: "/apsara-dancers.webp",
     alt: "Dancers of the Royal Ballet of Cambodia performing Apsara in gold headdresses and silk",
     caption: "Royal Ballet of Cambodia",
+  },
+  {
+    src: "/phnom-penh-skyline.webp",
+    alt: "Aerial view of Phnom Penh at dusk, the lit riverfront and downtown towers wrapped by the river, a cable-stayed bridge crossing at left",
+    caption: "Phnom Penh riverfront",
   },
 ];
 
