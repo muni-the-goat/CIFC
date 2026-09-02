@@ -52,18 +52,16 @@ select:focus-visible, textarea:focus-visible {
 
 .section { padding-block: var(--section); }
 
-/* Every .section pads top and bottom, so any two in a row stack into
-   2x --section — 302px at a 1500px viewport. That reads fine between
-   blocks carrying cards or images, but the mission line is a lone
-   paragraph, so the space under it becomes a void. Tighten the bottom
-   only: the top padding is still doing real work, separating the
-   statement from the full-bleed image above it. */
-.section--statement { padding-bottom: calc(var(--section) * 0.35); }
+/* Any two sections in a row stack their padding: 2x --section, or 180px
+   at a 1500px viewport. Fine between blocks carrying cards or images,
+   but the mission line is a lone paragraph and the space under it reads
+   as a void. Trim the bottom only — the top padding is still doing real
+   work, separating the statement from the full-bleed image above it. */
+.section--statement { padding-bottom: calc(var(--section) * 0.5); }
 
-/* Same stacking problem at the top of a page: .page-hero already pads
-   64px below the lede, and a full --section on top of that opened 215px
-   before the first field on /contact-us. */
-.section--after-hero { padding-top: calc(var(--section) * 0.35); }
+/* The same stack at the top of a page, where .page-hero has already
+   padded 64px below the lede. Together: 109px rather than 154px. */
+.section--after-hero { padding-top: calc(var(--section) * 0.5); }
 
 .eyebrow {
   display: inline-flex;
