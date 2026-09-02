@@ -9,7 +9,8 @@
     "lint": "next lint",
     "studio": "npm --prefix studio-cifc run dev",
     "studio:build": "npm --prefix studio-cifc run build",
-    "studio:deploy": "npm --prefix studio-cifc run deploy"
+    "studio:deploy": "npm --prefix studio-cifc run deploy",
+    "studio:seed": "npm --prefix studio-cifc run studio:seed"
   },
   "dependencies": {
     "@sanity/client": "^8.4.0",
