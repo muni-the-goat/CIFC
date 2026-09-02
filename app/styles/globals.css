@@ -52,6 +52,14 @@ select:focus-visible, textarea:focus-visible {
 
 .section { padding-block: var(--section); }
 
+/* Every .section pads top and bottom, so any two in a row stack into
+   2x --section — 302px at a 1500px viewport. That reads fine between
+   blocks carrying cards or images, but the mission line is a lone
+   paragraph, so the space under it becomes a void. Tighten the bottom
+   only: the top padding is still doing real work, separating the
+   statement from the full-bleed image above it. */
+.section--statement { padding-bottom: calc(var(--section) * 0.35); }
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -983,17 +991,11 @@ html.preloaded .member {
 
 .feature__inner { position: relative; z-index: 1; }
 
-/* The night tower needs almost none of that. It is already dark, and
-   the full scrim above flattened it to black. Weighted left, where the
-   copy sits, over a base light enough to keep the city lights alive. */
-.feature--night::after {
-  background:
-    linear-gradient(to right,
-      color-mix(in srgb, #16171A 66%, transparent) 0%,
-      color-mix(in srgb, #16171A 30%, transparent) 54%,
-      transparent 84%),
-    color-mix(in srgb, #16171A 14%, transparent);
-}
+/* Taller than the home feature, and not for effect. The dusk tower is a
+   vertical subject: its crown sits at 14% of frame height and its base
+   at 85%, so a 640px band on a 1500px viewport crops to the middle 64%
+   and beheads it. 760px keeps 76% of the frame, which clears both. */
+.feature--tall { min-height: min(80dvh, 760px); }
 
 
 /* A real section label, not a caption. It was losing to a 40px

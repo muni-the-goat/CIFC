@@ -25,10 +25,10 @@ export default function About() {
           copy, and two layouts for one paragraph read as two different
           claims. No data-anim here — /about mounts no motion component,
           so a gated reveal would strand the copy until the failsafe. */}
-      <section className="feature feature--night">
+      <section className="feature feature--tall">
         <Image
-          src={imagery.towerNight.src}
-          alt={imagery.towerNight.alt}
+          src={imagery.towerDusk.src}
+          alt={imagery.towerDusk.alt}
           fill
           sizes="100vw"
           className="feature__img"
@@ -40,7 +40,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="container section">
+      <section className="container section section--statement">
         {/* Runs the full container: the Infinity Horizon gradient is a
             90deg sweep, and a narrow measure compressed all three stops
             into a few words. */}
@@ -91,8 +91,8 @@ export default function About() {
       <section className="container section split split--flip">
         <figure className="split__figure">
           <Image
-            src={imagery.towerDusk.src}
-            alt={imagery.towerDusk.alt}
+            src={imagery.towerNight.src}
+            alt={imagery.towerNight.alt}
             fill
             sizes="(max-width: 880px) 100vw, 44vw"
             className="split__img"

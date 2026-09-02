@@ -41,9 +41,7 @@ export const imagery = {
     alt: "Canadia Tower at dusk, its glass facade catching the last light above the Phnom Penh skyline",
   },
   /* Source was a drone HEIC lying on its side with no orientation tag.
-     Rotated upright, then cut to a wide band across the crown so it can
-     back the full-bleed feature the way the aerial does on the home
-     page. Dark by nature, so it needs far less scrim than that one. */
+     Rotated upright and the dead black sky trimmed off the top. */
   towerNight: {
     src: "/canadia-tower-night.webp",
     alt: "Canadia Tower at night, its crown and edges picked out in gold light above the lit sprawl of central Phnom Penh",
