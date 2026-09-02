@@ -42,7 +42,7 @@ export const whoWeAre =
   "Canadia Impact Fund is established under Canadia Group, focusing on impact-driven investments that combine financial growth with positive societal outcomes. By understanding global and local markets, our vision is to foster sustainable urban development, digital transformation, and inclusive growth for Cambodia and beyond.";
 
 export const mission =
-  "Investing globally in ventures that create sustainable impact and lasting value — contributing to Cambodia’s continued development and regional growth.";
+  "Investing globally in ventures that create sustainable impact and lasting value, contributing to Cambodia’s continued development and regional growth.";
 
 /* Was hidden with display:none on the live site. */
 export const principles = [

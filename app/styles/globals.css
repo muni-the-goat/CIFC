@@ -117,6 +117,19 @@ select:focus-visible, textarea:focus-visible {
   color: transparent;
 }
 
+/* Mission statement. Full-measure by design — it is the one place the
+   brand gradient gets to run its whole length. */
+.mission {
+  font-size: var(--h2);
+  font-weight: var(--fw-title);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  /* No text-wrap override: the global `p` rule already sets `pretty`,
+     which guards a one-word last line. `balance` would equalise the
+     lines and pull them all back from the edge — the opposite of
+     running full measure. */
+}
+
 .visually-hidden {
   position: absolute; width: 1px; height: 1px;
   padding: 0; margin: -1px; overflow: hidden;

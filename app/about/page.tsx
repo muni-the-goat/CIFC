@@ -27,9 +27,10 @@ export default function About() {
       </section>
 
       <section className="container section">
-        <p className="gradient-text" style={{ fontSize: "var(--h2)", fontWeight: "var(--fw-title)", lineHeight: "var(--leading-snug)", letterSpacing: "var(--tracking-tight)", maxWidth: "24ch" }}>
-          {mission}
-        </p>
+        {/* Runs the full container: the Infinity Horizon gradient is a
+            90deg sweep, and a narrow measure compressed all three stops
+            into a few words. */}
+        <p className="mission gradient-text">{mission}</p>
       </section>
 
       <section className="container section">
