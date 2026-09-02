@@ -129,16 +129,19 @@ export const portfolio = [
   },
 ];
 
+/* Portraits are cropped to 2:3 in the card, so the source only needs to
+   be tall enough — every file is 1200w except the aspect noted below. */
 export const team = [
-  { name: "Thierry Tea",      role: "Chief Executive Officer" },
-  { name: "Sophanarith Ou",   role: "Chief Financial Officer" },
-  { name: "Sherry Lin",       role: "Investment Advisor" },
-  { name: "Jim Baldy",        role: "Senior Investment Associate" },
-  { name: "Anandha Khaou",    role: "Investment Associate" },
-  { name: "Siriwat Chhem",    role: "Investment Advisor" },
-  { name: "Eva Berlinson",    role: "CSR & Sustainability Associate" },
-  { name: "Keolakena Kin",    role: "Investment Administration" },
-  { name: "Kanaya Chamroeun", role: "Investment Analyst" },
+  // NOTE: supplied portrait is filenamed "Mr. Thierry Tea- VP" but the
+  // role of record is CEO. Confirm which is current before launch.
+  { name: "Thierry Tea",      role: "Chief Executive Officer",        photo: "/team/thierry-tea.webp" },
+  { name: "Sophanarith Ou",   role: "Chief Financial Officer",        photo: "/team/sophanarith-ou.webp" },
+  { name: "Sherry Lin",       role: "Investment Advisor",             photo: "/team/sherry-lin.webp" },
+  { name: "Jim Baldy",        role: "Senior Investment Associate",    photo: "/team/jim-baldy.webp" },
+  { name: "Anandha Khaou",    role: "Investment Associate",           photo: "/team/anandha-khaou.webp" },
+  { name: "Siriwat Chhem",    role: "Investment Advisor",             photo: "/team/siriwat-chhem.webp" },
+  { name: "Eva Berlinson",    role: "CSR & Sustainability Associate", photo: "/team/eva-berlinson.webp" },
+  { name: "Kanaya Chamroeun", role: "Investment Analyst",             photo: "/team/kanaya-chamroeun.webp" },
 ].map((m) => ({ ...m, basedIn: "Phnom Penh, Cambodia" }));
 
 /* The live site has these three written but the whole section is

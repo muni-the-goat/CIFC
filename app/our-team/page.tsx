@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/PageHero";
 import { team } from "@/lib/content";
 
@@ -19,14 +20,28 @@ export default function Team() {
       />
 
       <section className="container section">
-        <ul className="grid grid--3" style={{ listStyle: "none", margin: 0, padding: 0 }}>
-          {team.map((m) => (
-            <li key={m.name} className="card">
-              {/* Role and location are always visible — the live site
-                  hides them behind hover, unreachable on touch. */}
-              <h2 style={{ fontSize: "var(--h4)", marginBottom: "var(--space-2)" }}>{m.name}</h2>
-              <p style={{ color: "var(--pulse-blue)", fontWeight: "var(--fw-title)" }}>{m.role}</p>
-              <p style={{ fontSize: "var(--text-sm)", marginTop: "var(--space-2)" }}>{m.basedIn}</p>
+        <ul className="team-grid">
+          {team.map((m, i) => (
+            /* Staggered rise is a CSS keyframe, not GSAP — this page
+               mounts no motion component, and a portrait must never be
+               left invisible waiting on a script. */
+            <li key={m.name} className="member" style={{ ["--i" as string]: i }}>
+              <div className="member__frame">
+                <Image
+                  src={m.photo}
+                  alt={`Portrait of ${m.name}`}
+                  fill
+                  sizes="(max-width: 560px) 46vw, (max-width: 900px) 44vw, 23vw"
+                  className="member__img"
+                  /* Only the first row is above the fold. */
+                  priority={i < 4}
+                />
+              </div>
+              {/* Role and location stay visible — the live site hides
+                  them behind hover, unreachable on touch. */}
+              <h2 className="member__name">{m.name}</h2>
+              <p className="member__role">{m.role}</p>
+              <p className="member__base">{m.basedIn}</p>
             </li>
           ))}
         </ul>
