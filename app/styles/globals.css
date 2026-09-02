@@ -984,10 +984,23 @@ html.preloaded .hero__line-inner {
 }
 
 /* --- FAQ ------------------------------------------------------
-   Surfaces are painted by liquid-gooey's silhouette layer, so the
-   real elements stay transparent — giving them a background here
-   would double the fill and kill the bridge.
+   Two modes. With the goo (desktop only), liquid-gooey's silhouette
+   layer paints the surfaces and the real elements MUST stay
+   transparent — a background here would double the fill and kill the
+   bridge. Without it, the elements paint themselves.
    ------------------------------------------------------------ */
+
+/* Plain mode: phones, coarse pointers, reduced motion. */
+.faq[data-rich="false"] .faq__q,
+.faq[data-rich="false"] .faq__a {
+  background: var(--grey-50);
+}
+.faq[data-rich="false"] .faq__q { border-radius: 999px; }
+.faq[data-rich="false"] .faq__a { border-radius: 26px; }
+/* Collapsed panels have no visible box to paint. */
+.faq[data-rich="false"] .faq__item[data-open="false"] .faq__a {
+  background: none;
+}
 
 .faq {
   display: grid;
