@@ -256,7 +256,7 @@ select:focus-visible, textarea:focus-visible {
 .nav__glyph--close span:last-child  { transform: translateY(-3px) rotate(-45deg); }
 
 .nav__logo { justify-self: center; display: inline-flex; }
-.nav__logo img { height: 46px; width: auto; }
+.nav__logo img { height: 58px; width: auto; }
 
 /* Colour states. --nav-invert reverses the colour logo to the white
    lockup the guideline specifies for use on the gradient. */
@@ -267,7 +267,7 @@ select:focus-visible, textarea:focus-visible {
 
 @media (max-width: 640px) {
   .nav__bar { padding: var(--space-4) var(--gutter); }
-  .nav__logo img { height: 36px; }
+  .nav__logo img { height: 42px; }
   .nav__cta span { display: none; }
 }
 
@@ -277,7 +277,7 @@ select:focus-visible, textarea:focus-visible {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: #F6F4EC;               /* warm paper, off the pure-white page */
+  background: var(--white);
   display: grid;
   grid-template-rows: 1fr auto;
   align-items: center;
@@ -307,9 +307,11 @@ select:focus-visible, textarea:focus-visible {
   display: block;
   font-size: clamp(2.25rem, 6.4vw, 5rem);
   font-weight: var(--fw-title);
-  line-height: 1.06;
+  line-height: 1.1;
   letter-spacing: -0.03em;
   color: var(--ink);
+  /* Also the tap target — the links carry no other padding. */
+  padding-block: 0.05em;
   transition: color var(--duration) var(--ease);
 }
 .menu__item a:hover { color: var(--pulse-blue); }
@@ -329,6 +331,19 @@ select:focus-visible, textarea:focus-visible {
 }
 
 .menu__foot { text-align: center; }
+
+/* Narrow screens were bottoming out on the clamp minimum at 36px and
+   stacking on a 1.06 leading — too small and too tight to read as the
+   primary navigation. */
+@media (max-width: 640px) {
+  .menu { padding-inline: var(--gutter); }
+  .menu__item a {
+    font-size: clamp(2.75rem, 11.5vw, 3.75rem);
+    line-height: 1.16;
+    padding-block: 0.12em;
+  }
+  .menu__foot { margin-top: var(--space-8); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .menu, .menu__item, .menu__foot { transition-duration: 0.01ms; }
@@ -720,7 +735,16 @@ select:focus-visible, textarea:focus-visible {
   transition: background-color var(--duration) var(--ease);
 }
 .holding:hover { background: color-mix(in srgb, var(--pulse-blue) 6%, var(--grey-50)); }
-.holding__logo { width: 200px; height: auto; }
+/* Normalise on HEIGHT, not width: these marks have very different
+   aspect ratios, and a fixed width renders a square logo at more than
+   twice the visual weight of a wide one. */
+.holding__logo {
+  width: auto;
+  height: 52px;
+  max-width: 180px;
+  object-fit: contain;
+  object-position: left center;
+}
 .holding h3 { font-size: var(--h4); margin-bottom: var(--space-2); }
 .holding p { color: var(--grey-700); }
 
@@ -821,18 +845,22 @@ select:focus-visible, textarea:focus-visible {
   grid-template-columns: repeat(4, 1fr);
   pointer-events: none;
 }
+/* One continuous gradient across all four panels, not four flat bars.
+   Each panel paints the full Infinity Horizon at 4x its own width and
+   offsets to its own quarter — so the seams line up exactly and the
+   staggered sweep reveals a single unbroken gradient. */
 .wipe__panel {
-  background: var(--gradient-infinity-horizon);
+  background-image: var(--gradient-infinity-horizon);
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
   transform: scaleY(0);
   transform-origin: bottom;
   will-change: transform;
 }
-/* Panels sample different points along the gradient so the four read
-   as one continuous sweep rather than four identical bars. */
-.wipe__panel:nth-child(1) { background: var(--guava-rush); }
-.wipe__panel:nth-child(2) { background: color-mix(in srgb, var(--guava-rush) 45%, var(--amethyst)); }
-.wipe__panel:nth-child(3) { background: color-mix(in srgb, var(--amethyst) 45%, var(--pulse-blue)); }
-.wipe__panel:nth-child(4) { background: var(--pulse-blue); }
+.wipe__panel:nth-child(1) { background-position: 0% 0; }
+.wipe__panel:nth-child(2) { background-position: 33.3333% 0; }
+.wipe__panel:nth-child(3) { background-position: 66.6667% 0; }
+.wipe__panel:nth-child(4) { background-position: 100% 0; }
 
 /* Reversed to white — the mark ships in brand rose, which would sit
    invisibly on the rose panel. */
@@ -940,11 +968,338 @@ html.lenis, html.lenis body { height: auto; }
    text is at its natural position until the animation is granted, so
    nothing is hidden if this class never lands. */
 html.preloaded .hero__line-inner {
-  animation: hero-line-rise 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: calc(160ms + var(--i, 0) * 90ms);
+  /* Timing is measured from the moment the curtain starts lifting.
+     The lift takes 720ms, so a 60ms lead-in meant the lines had done
+     most of their travel while still covered — cubic-bezier(.16,1,.3,1)
+     front-loads almost all the motion into the first third. Starting at
+     400ms and running 1.5s puts the cascade after the reveal, where it
+     can actually be seen. */
+  animation: hero-line-rise 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(400ms + var(--i, 0) * 130ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .preloader { display: none !important; }
   html.preloaded .hero__line-inner { animation: none; }
+}
+
+/* --- FAQ ------------------------------------------------------
+   Surfaces are painted by liquid-gooey's silhouette layer, so the
+   real elements stay transparent — giving them a background here
+   would double the fill and kill the bridge.
+   ------------------------------------------------------------ */
+
+.faq {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 60rem;
+  margin-top: var(--space-12);
+}
+
+.faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  width: 100%;
+  padding: var(--space-6) var(--space-8);
+  border: 0;
+  background: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: var(--h4);
+  font-weight: var(--fw-subtitle);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+/* A plus that rotates into a minus — no icon dependency. */
+.faq__sign {
+  position: relative;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  transition: transform 520ms var(--ease);
+}
+.faq__sign::before,
+.faq__sign::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1.5px;
+  background: var(--ink);
+  translate: 0 -50%;
+  transition: opacity 320ms var(--ease);
+}
+.faq__sign::after { rotate: 90deg; }
+.faq__item[data-open="true"] .faq__sign { transform: rotate(180deg); }
+.faq__item[data-open="true"] .faq__sign::after { opacity: 0; }
+.faq__item[data-open="true"] .faq__q { color: var(--pulse-blue); }
+
+/* 0fr → 1fr animates cleanly to content height, unlike max-height
+   guesses. The liquid follows the resulting rect via `observe`. */
+.faq__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  border-radius: 26px;
+  /* margin-top opens a real layout gap as it expands, so the goo bridge
+     stretches and snaps instead of fusing the two surfaces into one
+     pinched shape. Real margin, not a transform — the group has to
+     reserve the travel or the next row gets overlapped. */
+  margin-top: 0;
+  transition: grid-template-rows 560ms var(--ease),
+              margin-top 560ms var(--ease);
+}
+.faq__item[data-open="true"] .faq__a {
+  grid-template-rows: 1fr;
+  margin-top: 18px;
+}
+
+.faq__a-inner { overflow: hidden; }
+.faq__a-inner p {
+  /* Symmetric — 8px top against 32px bottom sat the text high in the
+     panel. Equal padding centres it now that the answer is a detached
+     surface rather than tucked under the question. */
+  padding: var(--space-8);
+  /* Fills the panel — a 62ch cap left a third of the surface empty.
+     The answers run two or three lines, so the longer measure costs
+     nothing in readability. */
+  font-size: var(--text-lg);
+  color: var(--grey-700);
+  opacity: 0;
+  translate: 0 -6px;
+  transition: opacity 300ms var(--ease), translate 300ms var(--ease);
+}
+.faq__item[data-open="true"] .faq__a-inner p {
+  opacity: 1;
+  translate: 0;
+  transition-delay: 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq__a, .faq__sign, .faq__a-inner p { transition-duration: 0.01ms; }
+}
+
+/* --- Inner page hero entrance --------------------------------
+   Reuses the home hero's mask keyframe, so a heading is never gated
+   on JS. `.page-hero__lede` follows the last line up.
+   ------------------------------------------------------------ */
+
+.page-hero h1 .hero__line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+
+html.preloaded .page-hero .hero__line-inner {
+  animation: hero-line-rise 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(260ms + var(--i, 0) * 120ms);
+}
+
+@keyframes hero-lede-rise {
+  from { opacity: 0; translate: 0 20px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+html.preloaded .page-hero__lede {
+  animation: hero-lede-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 620ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.preloaded .page-hero .hero__line-inner,
+  html.preloaded .page-hero__lede { animation: none; }
+}
+
+/* --- Sector gallery -------------------------------------------
+   One large card at the leading edge with the next peeking, and a
+   floating translucent capsule for the controls. Native overflow
+   scrolling supplies momentum, rubber-banding and interruptibility;
+   desktop adds 1:1 pointer drag with momentum projection.
+   ------------------------------------------------------------ */
+
+.gal {
+  padding-block: var(--section) 0;
+  /* Card width declared, not inferred — the track's trailing padding
+     has to be computed from it. */
+  --gal-h: min(64dvh, 620px);
+  --gal-w: calc(var(--gal-h) * 1.6);   /* 16:10 */
+}
+.gal__head { margin-bottom: var(--space-10, var(--space-8)); }
+
+.gal__stage { position: relative; }
+
+.gal__viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  /* proximity, not mandatory: mandatory forces a rest on a snap point,
+     so if the last card's target is even a pixel past maxScroll the
+     browser drags back to the previous card and the gallery jams.
+     proximity snaps when close and lets the end of the track be a
+     valid resting place. */
+  scroll-snap-type: x proximity;
+  scroll-padding-left: var(--gutter);
+  scrollbar-width: none;
+  cursor: grab;
+  will-change: scroll-position;
+}
+.gal__viewport::-webkit-scrollbar { display: none; }
+.gal__viewport[data-dragging="true"] { cursor: grabbing; }
+.gal__viewport[data-dragging="true"] .gal__card { scroll-snap-align: none; }
+
+.gal__track {
+  display: flex;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  /* max-content, not auto. With auto the track's box is only as wide as
+     the scrollport, so the cards overflow PAST its padding-right and
+     that padding contributes nothing to the scrollable area — the end
+     of the track had no gutter and the last card could never reach the
+     leading edge. Sizing to content puts the padding after the last
+     card, where it belongs. */
+  width: max-content;
+  padding-left: var(--gutter);
+  /* Just a gutter. Reserving a full viewport here would let the last
+     card reach the LEADING edge, but that leaves most of the screen
+     empty at the end — Apple's carousels finish with the last card
+     flush at the trailing gutter instead.
+     The last card's start-snap point is then unreachable, which is
+     fine: snap is `proximity` (never forced) and the scroll handler
+     treats maxScroll as the last index. */
+  padding-right: var(--gutter);
+}
+
+/* Sized from HEIGHT, not width: a 16:10 card at 84vw is taller than
+   the viewport, which pushed the floating capsule below the fold.
+   Driving off dvh keeps the whole card — and its controls — on screen,
+   and the width follows from the aspect ratio. */
+.gal__card {
+  position: relative;
+  flex: 0 0 auto;
+  height: var(--gal-h);
+  width: var(--gal-w);
+  border-radius: 32px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  isolation: isolate;
+}
+
+.gal__img {
+  object-fit: cover;
+  z-index: -2;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.gal__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top,
+    color-mix(in srgb, #16171A 78%, transparent) 0%,
+    color-mix(in srgb, #16171A 20%, transparent) 46%,
+    transparent 74%);
+}
+
+.gal__body {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: clamp(var(--space-8), 4vw, var(--space-16));
+  color: var(--white);
+}
+.gal__body h3 {
+  font-size: clamp(2rem, 4.4vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin-bottom: var(--space-3);
+  color: var(--white);
+}
+.gal__body p {
+  font-size: var(--text-xl);
+  color: color-mix(in srgb, var(--white) 86%, transparent);
+}
+
+/* --- Control capsule ------------------------------------------
+   Sits below the carousel, not over it. On the page's white ground a
+   dark translucent material would read as a foreign object, so it
+   takes a light surface with a hairline instead.
+   ------------------------------------------------------------ */
+
+.gal__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: fit-content;
+  margin: var(--space-8) auto 0;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  background: var(--grey-50);
+}
+
+.gal__rail { display: flex; align-items: center; gap: 7px; }
+.gal__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 20%, transparent);
+  cursor: pointer;
+  transition: width 420ms var(--ease), background-color 420ms var(--ease);
+}
+.gal__dot[data-on="true"] { width: 28px; background: var(--ink); }
+
+.gal__nav-sep {
+  width: 1px;
+  height: 18px;
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.gal__arrows { display: flex; gap: 4px; }
+.gal__arrow {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 220ms var(--ease), opacity 220ms var(--ease),
+              transform 120ms var(--ease);
+}
+.gal__arrow:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+/* Feedback on press, not release. */
+.gal__arrow:active:not(:disabled) { transform: scale(0.9); }
+.gal__arrow:disabled { opacity: 0.28; cursor: default; }
+
+@media (max-width: 760px) {
+  .gal { --gal-w: 86vw; }
+  .gal__card {
+    height: auto;
+    width: var(--gal-w);
+    aspect-ratio: 4 / 5;
+    border-radius: 24px;
+  }
+  .gal__body p { font-size: var(--text-base); }
+  .gal__body h3 { font-size: clamp(1.75rem, 8vw, 2.5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gal__viewport { scroll-behavior: auto; }
+  .gal__dot, .gal__arrow { transition: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .gal__nav { background: #16171A; backdrop-filter: none; }
+}
+
+/* The heading reveal, shared with the inner-page lede. */
+html.preloaded .reveal {
+  animation: hero-lede-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 760ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.preloaded .reveal { animation: none; }
 }

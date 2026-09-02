@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/PageHero";
 import Image from "next/image";
-import SectorGrid from "@/components/SectorGrid";
+import SectorGallery from "@/components/SectorGallery";
 import { portfolio } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -13,21 +14,13 @@ export const metadata: Metadata = {
 export default function Portfolio() {
   return (
     <>
-      <section className="container page-hero">
-        <h1>
-          <span className="hero__light">Investments that deliver</span>
-          measurable change
-        </h1>
-        <p className="lede">
-          We back scalable solutions across healthcare, sustainable tech, AI, education,
-          biotech and logistics.
-        </p>
-      </section>
+      <PageHero
+        lead="Investments that deliver"
+        tail="measurable change"
+        lede="We back scalable solutions across healthcare, sustainable tech, AI, education, biotech and logistics."
+      />
 
-      <section className="container section">
-        <h2>Backing bold solutions creating real impact</h2>
-        <SectorGrid />
-      </section>
+      <SectorGallery />
 
       <section className="container section">
         <h2>Portfolio companies</h2>
@@ -43,8 +36,8 @@ export default function Portfolio() {
               <Image
                 src={c.logo}
                 alt={`${c.name} logo`}
-                width={200}
-                height={89}
+                width={c.logoW}
+                height={c.logoH}
                 sizes="200px"
                 className="holding__logo"
               />

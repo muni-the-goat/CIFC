@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { whoWeAre, mission, principles, stats, faq } from "@/lib/content";
+import PageHero from "@/components/PageHero";
+import { whoWeAre, mission, principles, stats } from "@/lib/content";
+import Faq from "@/components/Faq";
 
 export const metadata: Metadata = {
   title: "About",
@@ -11,18 +13,11 @@ export const metadata: Metadata = {
 export default function About() {
   return (
     <>
-      <section className="container page-hero">
-        <h1>
-          <span className="hero__light">Shaping Tomorrow through</span>
-          Responsible Investment
-        </h1>
-        <p className="lede">
-          We partner with visionary entrepreneurs and organizations to create lasting
-          social, environmental, and economic impact. By combining rigorous investment
-          strategies with purpose-driven projects, we turn capital into measurable change,
-          empowering communities and shaping a sustainable future for Cambodia and beyond.
-        </p>
-      </section>
+      <PageHero
+        lead="Shaping Tomorrow through"
+        tail="Responsible Investment"
+        lede="We partner with visionary entrepreneurs and organizations to create lasting social, environmental, and economic impact. By combining rigorous investment strategies with purpose-driven projects, we turn capital into measurable change, empowering communities and shaping a sustainable future for Cambodia and beyond."
+      />
 
       <section className="container section">
         <p className="eyebrow">Who we are</p>
@@ -63,16 +58,7 @@ export default function About() {
 
       <section className="container section">
         <h2>Quick answers to common questions</h2>
-        <div style={{ marginTop: "var(--space-12)", maxWidth: "72ch" }}>
-          {faq.map((f) => (
-            <details key={f.q} style={{ borderTop: "1px solid color-mix(in srgb, var(--ink) 8%, transparent)", padding: "var(--space-6) 0" }}>
-              <summary style={{ fontSize: "var(--h4)", fontWeight: "var(--fw-title)", cursor: "pointer" }}>
-                {f.q}
-              </summary>
-              <p style={{ color: "var(--grey-700)", marginTop: "var(--space-4)" }}>{f.a}</p>
-            </details>
-          ))}
-        </div>
+        <Faq />
       </section>
     </>
   );

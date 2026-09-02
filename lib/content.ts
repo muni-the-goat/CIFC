@@ -105,12 +105,27 @@ export const sectors: {
   },
 ];
 
+/* Logo intrinsic dimensions travel with each entry — the marks have
+   very different aspect ratios (Jalat is 2.26:1, NewWave is square), so
+   the grid normalises on height rather than width. */
 export const portfolio = [
   {
     name: "Jalat Logistics",
     url: "https://www.jalatlogistics.info/",
     sector: "Logistics",
     logo: "/jalat-logo.png",
+    logoW: 2000,
+    logoH: 885,
+  },
+  {
+    // NOTE: the company styles itself "NeWwave" on new-wave.io — confirm
+    // which spelling they want before launch.
+    name: "NewWave",
+    url: "https://www.new-wave.io/",
+    sector: "Software Development",
+    logo: "/newwave.png",
+    logoW: 256,
+    logoH: 256,
   },
 ];
 

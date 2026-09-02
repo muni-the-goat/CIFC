@@ -56,7 +56,7 @@ export default function Nav() {
     if (!heroEl) { setOverHero(false); return; }
     const io = new IntersectionObserver(
       ([entry]) => setOverHero(entry.isIntersecting),
-      { rootMargin: "-88px 0px 0px 0px", threshold: 0 }
+      { rootMargin: "-104px 0px 0px 0px", threshold: 0 }
     );
     io.observe(heroEl);
     return () => io.disconnect();
@@ -135,7 +135,7 @@ export default function Nav() {
           </button>
 
           <Link href="/" className="nav__logo" aria-label={`${site.name} — home`}>
-            <Image src="/cifc-logo.png" alt={site.name} width={129} height={46} priority sizes="129px" />
+            <Image src="/cifc-logo.png" alt={site.name} width={162} height={58} priority sizes="162px" />
           </Link>
 
           <Link href="/contact-us" className="nav__cta">

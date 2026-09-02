@@ -65,11 +65,22 @@ export default function Preloader() {
       creep.kill();
 
       gsap
-        .timeline({ onComplete: () => { el.dataset.state = "done"; finish(); } })
+        .timeline({ onComplete: () => { el.dataset.state = "done"; } })
         .to(count, { v: 100, duration: 0.3, ease: "power2.out", onUpdate: render })
         .to(logo, { opacity: 0, scale: 1.06, duration: 0.34, ease: "power2.in" }, "-=0.06")
         .to(countEl, { opacity: 0, y: -14, duration: 0.3, ease: "power2.in" }, "<")
-        .to(el, { yPercent: -100, duration: 0.72, ease: "expo.inOut" }, "-=0.12");
+        /* finish() on START, not on complete. It adds .preloaded, which
+           is what arms the hero line reveal — fired at the end, the
+           overlay would clear first, showing the headline at rest for a
+           beat before it snapped back to hidden and replayed. Firing
+           here means the lines are already rising as the curtain moves,
+           so the two read as one motion. */
+        .to(el, {
+          yPercent: -100,
+          duration: 0.72,
+          ease: "expo.inOut",
+          onStart: finish,
+        }, "-=0.12");
     };
 
     const ready = () => {

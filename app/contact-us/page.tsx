@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/PageHero";
 import { inquiryTypes } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -11,15 +12,11 @@ export const metadata: Metadata = {
 export default function Contact() {
   return (
     <>
-      <section className="container page-hero">
-        <h1>
-          <span className="hero__light">Let’s Build</span>
-          Impact Together
-        </h1>
-        <p className="lede">
-          We welcome partnerships, proposals, and conversations that drive meaningful change.
-        </p>
-      </section>
+      <PageHero
+        lead="Let’s Build"
+        tail="Impact Together"
+        lede="We welcome partnerships, proposals, and conversations that drive meaningful change."
+      />
 
       <section className="container section">
         {/* TODO: Webflow’s form handler does not come across. Wire this to a

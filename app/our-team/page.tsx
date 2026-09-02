@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/PageHero";
 import { team } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -11,15 +12,11 @@ export const metadata: Metadata = {
 export default function Team() {
   return (
     <>
-      <section className="container page-hero">
-        <h1>
-          <span className="hero__light">Meet the people powering</span>
-          Canadia Impact Fund
-        </h1>
-        <p className="lede">
-          A team of investors, operators, and experts, united by purpose.
-        </p>
-      </section>
+      <PageHero
+        lead="Meet the people powering"
+        tail="Canadia Impact Fund"
+        lede="A team of investors, operators, and experts, united by purpose."
+      />
 
       <section className="container section">
         <ul className="grid grid--3" style={{ listStyle: "none", margin: 0, padding: 0 }}>
