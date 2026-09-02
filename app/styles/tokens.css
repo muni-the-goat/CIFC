@@ -1,0 +1,106 @@
+/* ============================================================
+   Canadia Impact Fund — design tokens
+   Source: Canadia_Impact_Fund_LOGO GUIDELINE, First Edition v1.0,
+           Sep 2025 — pages 11–14.
+   Values marked [GUIDELINE] are taken directly from that document.
+   Values marked [PROPOSED] are not specified there and need brand
+   sign-off.
+   ============================================================ */
+
+:root {
+  /* --- Brand solids -------------------------------- [GUIDELINE] */
+  --guava-rush:  #EE486C;   /* rgb(238, 72, 108)  */
+  --amethyst:    #834CA7;   /* rgb(131, 76, 167)  */
+  --pulse-blue:  #2854E0;   /* rgb(40, 84, 224)   */
+
+  /* Semantic aliases */
+  --brand-primary:   var(--pulse-blue);
+  --brand-accent:    var(--guava-rush);
+  --brand-secondary: var(--amethyst);
+
+  /* --- Brand gradients ----------------------------- [GUIDELINE] */
+  --gradient-prospera:
+    linear-gradient(90deg, var(--guava-rush) 0%, var(--amethyst) 100%);
+  --gradient-infinity-horizon:
+    linear-gradient(90deg, var(--guava-rush) 0%, var(--amethyst) 50%, var(--pulse-blue) 100%);
+
+  /* --- Neutrals ------------------------------------ [GUIDELINE] */
+  --grey-700: #6D6E71;   /* body copy — 5.3:1 on white, passes AA */
+  --grey-400: #B1B3B6;   /* muted, non-text use only — 2.2:1 */
+  --grey-50:  #F8F8F9;   /* section fills */
+  --white:    #FFFFFF;
+
+  /* --- Ink ----------------------------------------- [PROPOSED]  */
+  /* The guideline defines no heading/text colour darker than
+     --grey-700. This near-black is proposed for headings; it is
+     NOT from the guideline and should be confirmed. */
+  --ink: #16171A;
+
+  /* --- Type ---------------------------------------- [GUIDELINE] */
+  /* Guideline specifies SF Pro Display (English) + Kantumruy Pro
+     (Khmer). SF Pro cannot be licensed for web distribution, so we
+     reference the OS font rather than shipping it: Apple devices
+     render genuine SF Pro, others fall back. Kantumruy Pro is SIL
+     OFL and IS self-hosted, and also covers Khmer glyphs in the
+     Latin stack below. */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display",
+    "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial,
+    var(--font-kantumruy), sans-serif;
+  --font-khmer: var(--font-kantumruy), var(--font-sans);
+
+  /* Weights — guideline: Title Medium, Sub-title Regular, Text Thin.
+     "Thin" is raised to 300 for screen legibility; true Thin (100)
+     is unreadable as body copy on the web. */
+  --fw-text:     300;
+  --fw-subtitle: 400;
+  --fw-title:    500;
+  --fw-strong:   600;
+
+  /* --- Fluid type scale ---------------------------- [PROPOSED]  */
+  /* Replaces the old static scale, which held 64px H1 from 1920px
+     down to 480px. Scales 320px → 1440px. */
+  --text-xs:   0.75rem;                                    /* 12 */
+  --text-sm:   0.875rem;                                   /* 14 */
+  --text-base: 1rem;                                       /* 16 */
+  --text-lg:   clamp(1.125rem, 0.35vw + 1.05rem, 1.25rem); /* 18–20 */
+  --text-xl:   clamp(1.25rem,  0.7vw + 1.1rem,  1.5rem);   /* 20–24 */
+  --h4:        clamp(1.25rem,  1vw + 1rem,      1.5rem);   /* 20–24 */
+  --h3:        clamp(1.5rem,   2vw + 1rem,      2.5rem);   /* 24–40 */
+  --h2:        clamp(2rem,     3.4vw + 1rem,    3.5rem);   /* 32–56 */
+  --h1:        clamp(2.5rem,   4.6vw + 1rem,    4rem);     /* 40–64 */
+  --display:   clamp(2.75rem,  5.4vw + 1rem,    4.6875rem);/* 44–75 */
+
+  --leading-tight: 1.1;
+  --leading-snug:  1.25;
+  --leading-body:  1.6;
+  --tracking-tight: -0.02em;
+  --tracking-wide:   0.08em;
+
+  /* --- Spacing — 4px base -------------------------- [PROPOSED]  */
+  --space-1:  0.25rem;   /*   4 */
+  --space-2:  0.5rem;    /*   8 */
+  --space-3:  0.75rem;   /*  12 */
+  --space-4:  1rem;      /*  16 */
+  --space-6:  1.5rem;    /*  24 */
+  --space-8:  2rem;      /*  32 */
+  --space-12: 3rem;      /*  48 */
+  --space-16: 4rem;      /*  64 */
+  --space-24: 6rem;      /*  96 */
+  --section:  clamp(5rem, 10vw, 12.5rem);  /* 80–200, was a hard 200/160 */
+
+  /* --- Radius / motion ----------------------------- [PROPOSED]  */
+  --radius:      8px;    /* carried over — 31 uses in the old system */
+  --radius-pill: 100px;
+  --ease:      cubic-bezier(0.39, 0.575, 0.565, 1);
+  --duration:  250ms;
+
+  /* --- Layout -------------------------------------- */
+  --container: 1200px;
+  --container-wide: 1440px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration: 0.01ms; }
+}
