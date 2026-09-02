@@ -20,3 +20,13 @@ CLAUDE.md
 
 # Unoptimised source portraits — public/team/ holds the WebP the site ships
 public/Teams/
+
+# Unoptimised source imagery. 39 MB between them; the site ships the
+# WebP conversions beside them (canadia-tower-*, angkor-wat, bayon,
+# apsara-dancers).
+/public/canadia tower.png
+/public/tower real.webp
+/public/Angkor-wat.png
+/public/Bayon.png
+/public/cambodia-culture.png
+/public/Canadia-Tower-skyline.HEIC

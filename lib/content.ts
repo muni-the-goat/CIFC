@@ -36,7 +36,43 @@ export const imagery = {
     src: "/koh-pich-aerial.webp",
     alt: "Aerial view of Koh Pich (Diamond Island), Phnom Penh, where the Bassac meets the Mekong — high-rise development along the riverfront",
   },
+  towerDusk: {
+    src: "/canadia-tower-dusk.webp",
+    alt: "Canadia Tower at dusk, its glass facade catching the last light above the Phnom Penh skyline",
+  },
+  towerCrown: {
+    src: "/canadia-tower-crown.webp",
+    alt: "The crown of Canadia Tower seen from below — a curved steel arch over a glass curtain wall against open sky",
+  },
+  /* Source was a drone HEIC lying on its side with no orientation tag;
+     rotated upright and the dead black sky trimmed off the top. */
+  towerNight: {
+    src: "/canadia-tower-night.webp",
+    alt: "Canadia Tower at night, its edges picked out in gold light, above the lit sprawl of central Phnom Penh",
+  },
 };
+
+/* Heritage row on /about. Ancient Khmer craft to the modern skyline, in
+   that order — the fund's own framing of Cambodia's continuity.
+   NOTE: the Angkor Wat source was cropped to drop a dense band of
+   tourists across the foreground; the temple silhouette is untouched. */
+export const heritage = [
+  {
+    src: "/angkor-wat.webp",
+    alt: "Sunrise over Angkor Wat, the central tower silhouetted against an orange sky behind a line of sugar palms",
+    caption: "Angkor Wat, Siem Reap",
+  },
+  {
+    src: "/bayon.webp",
+    alt: "The stone face towers of the Bayon temple at Angkor Thom, lit low against a clouded sky",
+    caption: "The Bayon, Angkor Thom",
+  },
+  {
+    src: "/apsara-dancers.webp",
+    alt: "Dancers of the Royal Ballet of Cambodia performing Apsara in gold headdresses and silk",
+    caption: "Royal Ballet of Cambodia",
+  },
+];
 
 export const whoWeAre =
   "Canadia Impact Fund is established under Canadia Group, focusing on impact-driven investments that combine financial growth with positive societal outcomes. By understanding global and local markets, our vision is to foster sustainable urban development, digital transformation, and inclusive growth for Cambodia and beyond.";

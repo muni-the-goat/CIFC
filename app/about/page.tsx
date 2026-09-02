@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/PageHero";
-import { whoWeAre, mission, principles, stats } from "@/lib/content";
+import { whoWeAre, mission, principles, stats, imagery, heritage } from "@/lib/content";
 import Faq from "@/components/Faq";
 
 export const metadata: Metadata = {
@@ -19,11 +20,22 @@ export default function About() {
         lede="We partner with visionary entrepreneurs and organizations to create lasting social, environmental, and economic impact. By combining rigorous investment strategies with purpose-driven projects, we turn capital into measurable change, empowering communities and shaping a sustainable future for Cambodia and beyond."
       />
 
-      <section className="container section">
-        <p className="eyebrow">Who we are</p>
-        <p style={{ fontSize: "var(--text-xl)", maxWidth: "70ch", marginTop: "var(--space-6)" }}>
-          {whoWeAre}
-        </p>
+      <section className="container section split">
+        <div>
+          <p className="eyebrow">Who we are</p>
+          <p className="split__copy">{whoWeAre}</p>
+        </div>
+        {/* The tower is the group's own landmark — the literal building
+            behind "established under Canadia Group". */}
+        <figure className="split__figure">
+          <Image
+            src={imagery.towerNight.src}
+            alt={imagery.towerNight.alt}
+            fill
+            sizes="(max-width: 880px) 100vw, 44vw"
+            className="split__img"
+          />
+        </figure>
       </section>
 
       <section className="container section">
@@ -31,6 +43,18 @@ export default function About() {
             90deg sweep, and a narrow measure compressed all three stops
             into a few words. */}
         <p className="mission gradient-text">{mission}</p>
+      </section>
+
+      {/* Full-bleed breath between the mission and the principles. No
+          copy over it, so it needs no scrim. */}
+      <section className="band" aria-hidden="true">
+        <Image
+          src={imagery.towerCrown.src}
+          alt=""
+          fill
+          sizes="100vw"
+          className="band__img"
+        />
       </section>
 
       <section className="container section">
@@ -46,14 +70,54 @@ export default function About() {
       </section>
 
       <section className="container section">
-        <h2>Canadia Group in numbers</h2>
-        <div className="grid grid--3" style={{ marginTop: "var(--space-12)" }}>
-          {stats.map((s) => (
-            <div key={s.label}>
-              <p className="stat__value">{s.value}</p>
-              <p className="stat__label">{s.label}</p>
-            </div>
+        <h2>Rooted in Cambodia</h2>
+        {/* NOTE: this line is mine, not client copy. Needs sign-off. */}
+        <p className="lede heritage__lede">
+          Cambodia’s inheritance runs from the temples of Angkor to the Phnom
+          Penh skyline. That continuity is what our investments are built on.
+        </p>
+        <ul className="heritage">
+          {heritage.map((h) => (
+            <li key={h.src}>
+              <figure className="heritage__item">
+                <div className="heritage__frame">
+                  <Image
+                    src={h.src}
+                    alt={h.alt}
+                    fill
+                    sizes="(max-width: 720px) 90vw, 31vw"
+                    className="heritage__img"
+                  />
+                </div>
+                <figcaption className="heritage__caption">{h.caption}</figcaption>
+              </figure>
+            </li>
           ))}
+        </ul>
+      </section>
+
+      {/* Image leads here, so the two splits on this page do not both
+          run photograph-right. */}
+      <section className="container section split split--flip">
+        <figure className="split__figure">
+          <Image
+            src={imagery.towerDusk.src}
+            alt={imagery.towerDusk.alt}
+            fill
+            sizes="(max-width: 880px) 100vw, 44vw"
+            className="split__img"
+          />
+        </figure>
+        <div>
+          <h2>Canadia Group in numbers</h2>
+          <div className="stats-stack">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p className="stat__value">{s.value}</p>
+                <p className="stat__label">{s.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

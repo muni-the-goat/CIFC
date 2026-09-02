@@ -130,6 +130,110 @@ select:focus-visible, textarea:focus-visible {
      running full measure. */
 }
 
+/* --- About: text beside a photograph ---------------------------- */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.split__copy {
+  font-size: var(--text-xl);
+  max-width: 60ch;
+  margin-top: var(--space-6);
+}
+
+/* Portrait crop: the tower is a vertical subject and the landscape
+   source is mostly empty sky either side of it. */
+.split__figure {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--grey-50);
+}
+.split__img { object-fit: cover; }
+
+/* The photograph is first in source order so it lands left on desktop;
+   the one-column rule below uses `order` to put it back after the copy,
+   which is the sequence a screen reader should hear either way. */
+.split--flip { grid-template-columns: 0.8fr 1fr; }
+
+.stats-stack {
+  display: grid;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+@media (max-width: 880px) {
+  .split { grid-template-columns: 1fr; gap: var(--space-8); }
+  .split__figure { aspect-ratio: 3 / 2; }
+  .split--flip .split__figure { order: 2; }
+}
+
+/* --- Full-bleed image band -------------------------------------
+   Sits outside .container, so it spans the viewport on its own. No
+   copy over it, which is why it carries no scrim.
+   ------------------------------------------------------------ */
+
+.band {
+  position: relative;
+  isolation: isolate;
+  height: min(52dvh, 520px);
+  overflow: hidden;
+}
+.band__img { object-fit: cover; }
+
+/* --- Heritage row ----------------------------------------------
+   4:3 cells, not portrait: the Apsara source is only 1024px wide and
+   a portrait crop left too few pixels to serve a retina cell.
+   ------------------------------------------------------------ */
+
+.heritage__lede { max-width: 56ch; margin-top: var(--space-4); }
+
+.heritage {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  list-style: none;
+  margin: var(--space-12) 0 0;
+  padding: 0;
+}
+
+.heritage__item { margin: 0; }
+
+.heritage__frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--grey-50);
+}
+
+.heritage__img {
+  object-fit: cover;
+  transition: transform 700ms var(--ease);
+}
+.heritage__item:hover .heritage__img { transform: scale(1.04); }
+
+.heritage__caption {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--grey-700);
+}
+
+@media (max-width: 720px) {
+  .heritage { grid-template-columns: 1fr; gap: var(--space-8); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heritage__img,
+  .heritage__item:hover .heritage__img { transition: none; transform: none; }
+}
+
 .visually-hidden {
   position: absolute; width: 1px; height: 1px;
   padding: 0; margin: -1px; overflow: hidden;
