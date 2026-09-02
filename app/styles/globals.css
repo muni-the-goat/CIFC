@@ -513,9 +513,33 @@ select:focus-visible, textarea:focus-visible {
 .grid--2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
 
 .card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding: var(--space-8); border-radius: var(--radius);
   background: var(--grey-50);
 }
+
+/* Brand mark bled off the corner. A pseudo-element, so it adds no DOM
+   and there is nothing for a screen reader to announce. Negative
+   z-index inside the card's own stacking context puts it above the
+   grey fill but under the copy — the same trick .sector__img uses. */
+.card::after {
+  content: "";
+  position: absolute;
+  right: -26px;
+  bottom: -30px;
+  width: 152px;
+  height: 128px;
+  background: url("/cifc-mark-sm.webp") no-repeat center / contain;
+  /* 0.10 rather than the 0.07 .intro__mark uses: that one is 520px
+     wide and reads at a whisper; at 152px the same value vanishes. */
+  opacity: 0.10;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+}
+
 .card h3 { font-size: var(--h4); margin-bottom: var(--space-3); }
 .card p { color: var(--grey-700); }
 
