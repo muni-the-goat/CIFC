@@ -19,7 +19,7 @@ export default function Team() {
         lede="A team of investors, operators, and experts, united by purpose."
       />
 
-      <section className="container section">
+      <section className="container section section--after-hero">
         <ul className="team-grid">
           {team.map((m, i) => (
             /* Staggered rise is a CSS keyframe, not GSAP — this page

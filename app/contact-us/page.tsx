@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/PageHero";
-import { inquiryTypes } from "@/lib/content";
+import { inquiryTypes, imagery } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Connect",
@@ -18,7 +19,7 @@ export default function Contact() {
         lede="We welcome partnerships, proposals, and conversations that drive meaningful change."
       />
 
-      <section className="container section">
+      <section className="container section section--after-hero contact">
         {/* TODO: Webflow’s form handler does not come across. Wire this to a
             Route Handler (app/api/contact/route.ts) plus Resend/Postmark
             before DNS cutover — this form is currently the only way to
@@ -60,6 +61,24 @@ export default function Contact() {
 
           <button type="submit" className="btn btn--primary">Send a message</button>
         </form>
+
+        {/* Sticky so it stays with the form rather than scrolling off at
+            the first field. Decorative, so the caption carries the only
+            text and the alt describes the photograph itself. */}
+        <figure className="contact__figure">
+          <div className="contact__frame">
+            <Image
+              src={imagery.independenceMonument.src}
+              alt={imagery.independenceMonument.alt}
+              fill
+              sizes="(max-width: 900px) 100vw, 38vw"
+              className="contact__img"
+            />
+          </div>
+          <figcaption className="contact__caption">
+            Independence Monument, Phnom Penh
+          </figcaption>
+        </figure>
       </section>
     </>
   );

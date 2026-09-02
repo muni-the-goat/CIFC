@@ -46,6 +46,10 @@ export const imagery = {
     src: "/canadia-tower-night.webp",
     alt: "Canadia Tower at night, its crown and edges picked out in gold light above the lit sprawl of central Phnom Penh",
   },
+  independenceMonument: {
+    src: "/independence-monument.webp",
+    alt: "The Independence Monument in Phnom Penh lit at night, long-exposure traffic trails sweeping around the roundabout",
+  },
 };
 
 /* Heritage row on /about. Ordered to match the section lede: the

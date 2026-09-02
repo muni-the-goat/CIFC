@@ -60,6 +60,11 @@ select:focus-visible, textarea:focus-visible {
    statement from the full-bleed image above it. */
 .section--statement { padding-bottom: calc(var(--section) * 0.35); }
 
+/* Same stacking problem at the top of a page: .page-hero already pads
+   64px below the lede, and a full --section on top of that opened 215px
+   before the first field on /contact-us. */
+.section--after-hero { padding-top: calc(var(--section) * 0.35); }
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -564,6 +569,50 @@ select:focus-visible, textarea:focus-visible {
 }
 
 /* --- Form --------------------------------------------------- */
+
+/* --- Contact ---------------------------------------------------
+   Form and photograph side by side. The form is long enough that a
+   static image would scroll away at the first field, so the figure
+   sticks — align-self: start is what lets it, since a stretched grid
+   item is already as tall as its track and has nowhere to travel.
+   ------------------------------------------------------------ */
+
+.contact {
+  display: grid;
+  grid-template-columns: 1fr 0.62fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+.contact__figure {
+  position: sticky;
+  top: calc(var(--space-24) + var(--space-4));
+  margin: 0;
+  align-self: start;
+}
+
+.contact__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--grey-50);
+}
+.contact__img { object-fit: cover; }
+
+.contact__caption {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--grey-700);
+}
+
+@media (max-width: 900px) {
+  .contact { grid-template-columns: 1fr; gap: var(--space-12); }
+  /* Nothing to stick to on one column, and the photograph reads better
+     wide than tall once it is the full measure. */
+  .contact__figure { position: static; }
+  .contact__frame { aspect-ratio: 3 / 2; }
+}
 
 .form { max-width: 42rem; display: grid; gap: var(--space-6); }
 .form__row { display: grid; gap: var(--space-6); }

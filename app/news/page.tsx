@@ -17,7 +17,7 @@ export default function News() {
         lede="Partnerships, investments, and community initiatives from across Canadia Group."
       />
 
-      <section className="container section">
+      <section className="container section section--after-hero">
         <ul className="grid grid--2" style={{ listStyle: "none", margin: 0, padding: 0 }}>
           {news.map((n) => (
             <li key={n.slug} className="card">
