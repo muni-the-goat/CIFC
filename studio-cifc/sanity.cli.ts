@@ -10,6 +10,12 @@ export default defineCliConfig({
      the Studio in Next ruled out. Nested under `deployment` — the
      top-level `autoUpdates` key is deprecated. */
   deployment: {
+    /* Issued by Sanity on the first deploy. Not a secret — it is a
+       public identifier like projectId. With it set, auto-updates track
+       a version you control at
+       sanity.io/manage/project/4eid4gr5/studios rather than the latest
+       channel, and deploys stop prompting for it. */
+    appId: "igg65jc2qnvgujb72b8byuyp",
     autoUpdates: true,
     /* Hosting for the Studio, free from Sanity, at
        <studioHost>.sanity.studio. Set here so `sanity deploy` is one
