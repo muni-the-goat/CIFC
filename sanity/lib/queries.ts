@@ -7,6 +7,17 @@ import { defineQuery } from "groq";
    unauthenticated client, which cannot see drafts anyway, but stating it
    keeps the query honest if a token is ever added. */
 
+/* The list projection asks for lqip so cards can blur up rather than
+   pop in, and for `hasBody` so the list knows which items have an
+   article behind them. A headline with no body gets no link — better
+   than a link to an empty page. */
+const IMAGE_FIELDS = `{
+  alt,
+  "url": asset->url,
+  "lqip": asset->metadata.lqip,
+  "aspect": asset->metadata.dimensions.aspectRatio
+}`;
+
 export const NEWS_QUERY = defineQuery(`
   *[_type == "newsItem" && !(_id in path("drafts.**"))]
     | order(publishedAt desc) {
@@ -14,9 +25,42 @@ export const NEWS_QUERY = defineQuery(`
       title,
       "slug": slug.current,
       publishedAt,
-      excerpt
+      excerpt,
+      "cover": coverImage ${IMAGE_FIELDS},
+      "hasBody": count(body) > 0
     }
 `);
+
+export const NEWS_SLUGS_QUERY = defineQuery(`
+  *[_type == "newsItem" && !(_id in path("drafts.**")) && count(body) > 0]
+    .slug.current
+`);
+
+/* `count(body) > 0` is the same rule NEWS_SLUGS_QUERY and the list's
+   linking use. Without it here the document still resolves and the page
+   renders a headline with nothing under it — a 200 for a URL nothing
+   links to. */
+export const NEWS_ITEM_QUERY = defineQuery(`
+  *[_type == "newsItem"
+      && !(_id in path("drafts.**"))
+      && slug.current == $slug
+      && count(body) > 0][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    excerpt,
+    "cover": coverImage ${IMAGE_FIELDS},
+    body
+  }
+`);
+
+export type SanityImage = {
+  alt: string | null;
+  url: string | null;
+  lqip: string | null;
+  aspect: number | null;
+} | null;
 
 export type NewsListItem = {
   _id: string;
@@ -24,4 +68,11 @@ export type NewsListItem = {
   slug: string | null;
   publishedAt: string | null;
   excerpt: string | null;
+  cover: SanityImage;
+  hasBody: boolean;
+};
+
+export type NewsArticle = Omit<NewsListItem, "hasBody"> & {
+  /* Portable Text blocks; typed loosely until TypeGen is wired. */
+  body: unknown[] | null;
 };

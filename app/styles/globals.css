@@ -926,6 +926,119 @@ select:focus-visible, textarea:focus-visible {
 .holding p { color: var(--grey-700); }
 
 
+/* --- News ------------------------------------------------------
+   Cards carry a cover when one exists and stay text-only when it does
+   not, so a half-filled dataset still reads as a deliberate grid.
+   ------------------------------------------------------------ */
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.news { padding: 0; overflow: hidden; }
+
+/* The whole card is the target, not just the headline. */
+.news__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.news__thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--grey-50);
+}
+.news__img {
+  object-fit: cover;
+  transition: transform 700ms var(--ease);
+}
+.news__link:hover .news__img { transform: scale(1.03); }
+
+.news__body { padding: var(--space-8); }
+
+.news__date {
+  font-size: var(--text-sm);
+  color: var(--grey-700);
+  margin-bottom: var(--space-3);
+}
+
+.news__title {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-subtitle);
+  line-height: var(--leading-snug);
+}
+.news__link:hover .news__title { color: var(--pulse-blue); }
+
+.news__excerpt {
+  margin-top: var(--space-3);
+  color: var(--grey-700);
+}
+
+@media (max-width: 760px) {
+  .news-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news__img, .news__link:hover .news__img { transition: none; transform: none; }
+}
+
+/* --- News article ----------------------------------------------- */
+
+.article { max-width: 74ch; }
+
+.article__back {
+  display: inline-block;
+  margin-bottom: var(--space-8);
+  font-size: var(--text-sm);
+  color: var(--grey-700);
+}
+.article__back:hover { color: var(--pulse-blue); }
+
+.article__title {
+  font-size: var(--h2);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  margin-block: var(--space-4) var(--space-6);
+}
+
+.article__cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin: var(--space-12) 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--grey-50);
+}
+.article__cover-img { object-fit: cover; }
+
+/* Body copy from Portable Text. The Studio emits bare h2/h3/p/ul, so
+   these are element selectors rather than classes. */
+.prose { font-size: var(--text-lg); }
+.prose > * + * { margin-top: var(--space-6); }
+.prose h2 { font-size: var(--h3); margin-top: var(--space-12); }
+.prose h3 { font-size: var(--h4); margin-top: var(--space-8); }
+.prose ul, .prose ol { padding-left: 1.25em; }
+.prose li + li { margin-top: var(--space-2); }
+.prose a { color: var(--pulse-blue); text-decoration: underline; }
+.prose blockquote {
+  padding-left: var(--space-6);
+  border-left: 2px solid var(--guava-rush);
+  color: var(--grey-700);
+}
+.prose__figure { margin: var(--space-12) 0; }
+.prose__img { width: 100%; height: auto; border-radius: var(--radius); }
+.prose__figure figcaption {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--grey-700);
+}
+
 /* --- Team ------------------------------------------------------
    Portrait cards. Eight members divide evenly into 4 or 2 columns,
    so the tracks are fixed rather than auto-fit — auto-fit was landing
