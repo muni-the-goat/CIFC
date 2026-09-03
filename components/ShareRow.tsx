@@ -56,6 +56,19 @@ function Check() {
 export default function ShareRow({ url, title }: Props) {
   const [copied, setCopied] = useState(false);
 
+  /* Share whatever URL the reader is actually on, not the canonical.
+
+     canadiaimpact.com still serves the old Webflow site, so sharing the
+     canonical before DNS cutover hands Facebook a URL that 404s there —
+     it scrapes the old template's "Page Not Found" and posts that as the
+     preview. Reading location at runtime shares the Vercel URL today and
+     the real domain the moment it points here, with no code change.
+
+     Initialised from the prop so the server and first client render
+     agree; the effect swaps it after mount. */
+  const [href, setHref] = useState(url);
+  useEffect(() => setHref(window.location.href), []);
+
   useEffect(() => {
     if (!copied) return;
     const t = setTimeout(() => setCopied(false), 2000);
@@ -64,13 +77,13 @@ export default function ShareRow({ url, title }: Props) {
 
   async function copy() {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(href);
       setCopied(true);
     } catch {
       /* Blocked or insecure context — select the URL so the reader can
          still copy it by hand instead of the button doing nothing. */
       const field = document.createElement("input");
-      field.value = url;
+      field.value = href;
       field.setAttribute("readonly", "");
       field.style.cssText = "position:fixed;opacity:0";
       document.body.appendChild(field);
@@ -95,7 +108,7 @@ export default function ShareRow({ url, title }: Props) {
         <li>
           <a
             className="share__btn"
-            href={`https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`}
+            href={`https://www.facebook.com/sharer/sharer.php?u=${enc(href)}`}
             target="_blank"
             rel="noreferrer noopener"
             title="Share on Facebook"
@@ -107,7 +120,7 @@ export default function ShareRow({ url, title }: Props) {
         <li>
           <a
             className="share__btn"
-            href={`https://x.com/intent/tweet?url=${enc(url)}&text=${enc(title)}`}
+            href={`https://x.com/intent/tweet?url=${enc(href)}&text=${enc(title)}`}
             target="_blank"
             rel="noreferrer noopener"
             title="Share on X"
@@ -119,7 +132,7 @@ export default function ShareRow({ url, title }: Props) {
         <li>
           <a
             className="share__btn"
-            href={`mailto:?subject=${enc(title)}&body=${enc(url)}`}
+            href={`mailto:?subject=${enc(title)}&body=${enc(href)}`}
             title="Share by email"
           >
             <Mail />
