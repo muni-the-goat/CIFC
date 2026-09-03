@@ -1009,9 +1009,19 @@ select:focus-visible, textarea:focus-visible {
      old layout used .section--after-hero, which assumes a PageHero
      above it and left the back link tucked under the navbar. */
   padding-block: calc(var(--space-24) + var(--space-12)) var(--section);
+  /* One reading measure for the whole article, centred in the viewport.
+     Head and body previously carried different max-widths and no auto
+     margin, so both sat flush left in a 1200px container with dead
+     space down the right. The cover deliberately breaks wider. */
+  --measure: 42rem;
 }
 
-.article__head { max-width: 46rem; }
+.article__head,
+.article__body,
+.article__foot {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
 
 .article__kicker {
   display: flex;
@@ -1044,7 +1054,6 @@ select:focus-visible, textarea:focus-visible {
   font-size: var(--text-xl);
   line-height: 1.45;
   color: var(--grey-700);
-  max-width: 40rem;
 }
 
 /* --- Share ---------------------------------------------------- */
@@ -1100,7 +1109,8 @@ select:focus-visible, textarea:focus-visible {
 
 /* Reading measure. Body images sit at this width — one image leads the
    article, the rest support the reading rather than compete with it. */
-.prose { max-width: 40rem; font-size: var(--text-lg); line-height: 1.65; }
+/* The measure is set by the parent; prose fills it. */
+.prose { font-size: var(--text-lg); line-height: 1.65; }
 .prose > * + * { margin-top: var(--space-6); }
 .prose h2 {
   font-size: var(--h3);
