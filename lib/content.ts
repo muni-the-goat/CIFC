@@ -178,8 +178,11 @@ export const team = [
   { name: "Kanaya Chamroeun", role: "Investment Analyst",             photo: "/team/kanaya-chamroeun.webp" },
 ].map((m) => ({ ...m, basedIn: "Phnom Penh, Cambodia" }));
 
-/* The live site has these three written but the whole section is
-   display:none, /news 404s, and every "Learn More" points at "#". */
+/* MIGRATED to Sanity (newsItem). The site no longer reads this — /news
+   and the home page query the CMS. Kept only because scripts/seed.ts
+   still imports it, which is exactly why the seed must be guarded:
+   re-running it would re-create documents that have since been
+   retitled in the Studio. Delete both together. */
 export const news = [
   { slug: "rabbit-school-campus", title: "OCIC Group and KPCC are supporting Rabbit School in expanding its Phnom Penh campus to provide inclusive education for more children with intellectual disabilities and autism." },
   { slug: "dmu-cambodia-mou",     title: "OCIC has signed an MoU with DMU Cambodia to Expand Student Academic and Career Opportunities." },

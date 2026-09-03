@@ -3,9 +3,16 @@ import Image from "next/image";
 import HeroGradient from "@/components/HeroGradient";
 import HomeMotion from "@/components/HomeMotion";
 import SectorGrid from "@/components/SectorGrid";
-import { hero, whoWeAre, principles, news, imagery } from "@/lib/content";
+import { hero, whoWeAre, principles, imagery } from "@/lib/content";
+import { client } from "@/sanity/lib/client";
+import { NEWS_QUERY, type NewsListItem } from "@/sanity/lib/queries";
 
-export default function Home() {
+/* Matches /news — the two render the same list and must not disagree. */
+export const revalidate = 60;
+
+export default async function Home() {
+  const news = await client.fetch<NewsListItem[]>(NEWS_QUERY);
+
   return (
     <>
       <HomeMotion />
@@ -95,8 +102,8 @@ export default function Home() {
           <Link href="/news" className="btn btn--ghost">View all</Link>
         </div>
         <div className="grid grid--3" data-anim data-anim-stagger style={{ marginTop: "var(--space-12)" }}>
-          {news.map((n) => (
-            <article key={n.slug} className="card">
+          {news.slice(0, 3).map((n) => (
+            <article key={n._id} className="card">
               <h3 style={{ fontSize: "var(--text-lg)", fontWeight: "var(--fw-subtitle)" }}>
                 {n.title}
               </h3>

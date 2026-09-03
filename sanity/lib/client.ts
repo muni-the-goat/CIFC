@@ -17,6 +17,9 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
+  /* No token. The dataset is public-read, so the site fetches
+     anonymously and drafts are invisible to it by construction. */
+  perspective: "published",
   /* CDN for reads. Turn this off in any context that must see a draft
      or a just-published change immediately. */
   useCdn: true,
