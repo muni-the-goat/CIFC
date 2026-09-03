@@ -962,10 +962,20 @@ select:focus-visible, textarea:focus-visible {
 
 .news__body { padding: var(--space-8); }
 
-.news__date {
+.news__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
   font-size: var(--text-sm);
   color: var(--grey-700);
   margin-bottom: var(--space-3);
+}
+.news__category {
+  font-weight: var(--fw-title);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink);
 }
 
 .news__title {
@@ -988,55 +998,149 @@ select:focus-visible, textarea:focus-visible {
   .news__img, .news__link:hover .news__img { transition: none; transform: none; }
 }
 
-/* --- News article ----------------------------------------------- */
+/* --- News article ------------------------------------------------
+   Newsroom layout: a narrow measure for reading, with the cover
+   breaking wider. Type follows the size-specific tracking rule —
+   the headline is tightened, body copy sits near zero.
+   ------------------------------------------------------------ */
 
-.article { max-width: 74ch; }
+.article {
+  /* The nav is fixed, so the first element needs real clearance. The
+     old layout used .section--after-hero, which assumes a PageHero
+     above it and left the back link tucked under the navbar. */
+  padding-block: calc(var(--space-24) + var(--space-12)) var(--section);
+}
 
-.article__back {
-  display: inline-block;
-  margin-bottom: var(--space-8);
+.article__head { max-width: 46rem; }
+
+.article__kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
   color: var(--grey-700);
+  margin-bottom: var(--space-6);
 }
-.article__back:hover { color: var(--pulse-blue); }
+
+.article__category {
+  font-weight: var(--fw-title);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink);
+}
 
 .article__title {
-  font-size: var(--h2);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-tight);
-  margin-block: var(--space-4) var(--space-6);
+  font-size: clamp(2.25rem, 4.4vw + 1rem, 4rem);
+  font-weight: var(--fw-title);
+  line-height: 1.06;
+  /* Negative tracking, because letters read too far apart as type grows. */
+  letter-spacing: -0.028em;
+  text-wrap: balance;
 }
+
+.article__standfirst {
+  margin-top: var(--space-6);
+  font-size: var(--text-xl);
+  line-height: 1.45;
+  color: var(--grey-700);
+  max-width: 40rem;
+}
+
+/* --- Share ---------------------------------------------------- */
+
+.share { margin-top: var(--space-8); }
+
+.share__list {
+  display: flex;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.share__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--grey-50);
+  color: var(--grey-700);
+  cursor: pointer;
+  transition: background-color 160ms var(--ease), color 160ms var(--ease),
+              transform 120ms var(--ease);
+}
+.share__btn:hover { background: color-mix(in srgb, var(--ink) 8%, var(--grey-50)); color: var(--ink); }
+/* Feedback on press, not on release. */
+.share__btn:active { transform: scale(0.94); }
+.share__btn[data-copied] {
+  background: color-mix(in srgb, var(--pulse-blue) 12%, var(--white));
+  color: var(--pulse-blue);
+}
+
+/* --- Cover ---------------------------------------------------- */
 
 .article__cover {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  margin: var(--space-12) 0;
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--grey-50);
+  margin: var(--space-16) auto 0;
+  padding-inline: var(--gutter);
+  max-width: calc(var(--container-wide, 1440px));
 }
-.article__cover-img { object-fit: cover; }
+.article__cover-img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
 
-/* Body copy from Portable Text. The Studio emits bare h2/h3/p/ul, so
-   these are element selectors rather than classes. */
-.prose { font-size: var(--text-lg); }
+/* --- Body ----------------------------------------------------- */
+
+.article__body { margin-top: var(--space-16); }
+
+/* Reading measure. Body images sit at this width — one image leads the
+   article, the rest support the reading rather than compete with it. */
+.prose { max-width: 40rem; font-size: var(--text-lg); line-height: 1.65; }
 .prose > * + * { margin-top: var(--space-6); }
-.prose h2 { font-size: var(--h3); margin-top: var(--space-12); }
-.prose h3 { font-size: var(--h4); margin-top: var(--space-8); }
+.prose h2 {
+  font-size: var(--h3);
+  line-height: var(--leading-snug);
+  letter-spacing: -0.015em;
+  margin-top: var(--space-16);
+}
+.prose h3 { font-size: var(--h4); margin-top: var(--space-12); }
 .prose ul, .prose ol { padding-left: 1.25em; }
 .prose li + li { margin-top: var(--space-2); }
-.prose a { color: var(--pulse-blue); text-decoration: underline; }
+.prose a { color: var(--pulse-blue); text-decoration: underline; text-underline-offset: 0.15em; }
 .prose blockquote {
   padding-left: var(--space-6);
   border-left: 2px solid var(--guava-rush);
   color: var(--grey-700);
 }
-.prose__figure { margin: var(--space-12) 0; }
+.prose strong { font-weight: var(--fw-title); }
+
+.prose__figure { margin-block: var(--space-12); }
 .prose__img { width: 100%; height: auto; border-radius: var(--radius); }
 .prose__figure figcaption {
   margin-top: var(--space-3);
   font-size: var(--text-sm);
   color: var(--grey-700);
+}
+
+.article__foot {
+  margin-top: var(--space-16);
+  padding-top: var(--space-8);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+}
+.article__back { font-size: var(--text-sm); color: var(--grey-700); }
+.article__back:hover { color: var(--pulse-blue); }
+
+@media (max-width: 700px) {
+  .article { padding-block: calc(var(--space-24) + var(--space-4)) var(--section); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share__btn, .share__btn:active { transition: none; transform: none; }
 }
 
 /* --- Team ------------------------------------------------------

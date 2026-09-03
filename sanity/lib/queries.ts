@@ -23,6 +23,7 @@ export const NEWS_QUERY = defineQuery(`
     | order(publishedAt desc) {
       _id,
       title,
+      category,
       "slug": slug.current,
       publishedAt,
       excerpt,
@@ -40,6 +41,12 @@ export const NEWS_SLUGS_QUERY = defineQuery(`
    linking use. Without it here the document still resolves and the page
    renders a headline with nothing under it — a 200 for a URL nothing
    links to. */
+// body[] resolves asset URLs for inline images, so the renderer never
+// hits the API a second time mid-render.
+//
+// Note: a GROQ string only accepts double-slash comments. A block
+// comment inside one is a parse error, and it surfaces only when the
+// query runs — the build compiles and then fails at export.
 export const NEWS_ITEM_QUERY = defineQuery(`
   *[_type == "newsItem"
       && !(_id in path("drafts.**"))
@@ -47,11 +54,15 @@ export const NEWS_ITEM_QUERY = defineQuery(`
       && count(body) > 0][0] {
     _id,
     title,
+    category,
     "slug": slug.current,
     publishedAt,
     excerpt,
     "cover": coverImage ${IMAGE_FIELDS},
-    body
+    body[]{
+      ...,
+      _type == "captionedImage" => { ..., "url": asset->url, "lqip": asset->metadata.lqip }
+    }
   }
 `);
 
@@ -62,9 +73,20 @@ export type SanityImage = {
   aspect: number | null;
 } | null;
 
+export type NewsCategory = "press-release" | "story" | "csr";
+
+/* Display labels live with the type they describe, so adding a category
+   in the Studio surfaces here as a type error rather than a blank chip. */
+export const CATEGORY_LABEL: Record<NewsCategory, string> = {
+  "press-release": "Press Release",
+  story: "Story",
+  csr: "CSR",
+};
+
 export type NewsListItem = {
   _id: string;
   title: string;
+  category: NewsCategory | null;
   slug: string | null;
   publishedAt: string | null;
   excerpt: string | null;

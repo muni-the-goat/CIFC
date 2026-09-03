@@ -4,7 +4,11 @@ import Link from "next/link";
 
 import PageHero from "@/components/PageHero";
 import { client } from "@/sanity/lib/client";
-import { NEWS_QUERY, type NewsListItem } from "@/sanity/lib/queries";
+import {
+  CATEGORY_LABEL,
+  NEWS_QUERY,
+  type NewsListItem,
+} from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "News",
@@ -48,11 +52,16 @@ function Card({ item }: { item: NewsListItem }) {
         </div>
       )}
       <div className="news__body">
-        {date && (
-          <p className="news__date">
+        <p className="news__meta">
+          {item.category && (
+            <span className="news__category">
+              {CATEGORY_LABEL[item.category]}
+            </span>
+          )}
+          {date && (
             <time dateTime={item.publishedAt ?? undefined}>{date}</time>
-          </p>
-        )}
+          )}
+        </p>
         <h2 className="news__title">{item.title}</h2>
         {item.excerpt && <p className="news__excerpt">{item.excerpt}</p>}
       </div>

@@ -4,8 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import NewsBody from "@/components/NewsBody";
+import ShareRow from "@/components/ShareRow";
+import { site } from "@/lib/content";
 import { client } from "@/sanity/lib/client";
 import {
+  CATEGORY_LABEL,
   NEWS_ITEM_QUERY,
   NEWS_SLUGS_QUERY,
   type NewsArticle,
@@ -15,7 +18,8 @@ export const revalidate = 60;
 
 /* Only items that actually have a body get a page. A headline with
    nothing behind it would render an empty article, so it stays a plain
-   card on /news and this route 404s for it. */
+   card on /news and this route 404s for it. The same count(body) > 0
+   rule lives in the article query and the sitemap. */
 export async function generateStaticParams() {
   const slugs = await client
     .withConfig({ useCdn: false })
@@ -70,21 +74,28 @@ export default async function NewsArticlePage({
   if (!article) notFound();
 
   const date = formatDate(article.publishedAt);
+  const label = article.category ? CATEGORY_LABEL[article.category] : null;
+  const url = `${site.url}/news/${slug}`;
 
   return (
-    <article className="container section section--after-hero article">
-      <Link href="/news" className="article__back">
-        Back to news
-      </Link>
-
-      <header className="article__head">
-        {date && (
-          <p className="eyebrow">
+    <article className="article">
+      {/* Kicker, headline and standfirst sit in a narrow measure; the
+          cover breaks wider below them. */}
+      <header className="container article__head">
+        <p className="article__kicker">
+          {label && <span className="article__category">{label}</span>}
+          {date && (
             <time dateTime={article.publishedAt ?? undefined}>{date}</time>
-          </p>
-        )}
+          )}
+        </p>
+
         <h1 className="article__title">{article.title}</h1>
-        {article.excerpt && <p className="lede">{article.excerpt}</p>}
+
+        {article.excerpt && (
+          <p className="article__standfirst">{article.excerpt}</p>
+        )}
+
+        <ShareRow url={url} title={article.title} />
       </header>
 
       {article.cover?.url && (
@@ -92,8 +103,9 @@ export default async function NewsArticlePage({
           <Image
             src={article.cover.url}
             alt={article.cover.alt ?? ""}
-            fill
-            sizes="(max-width: 900px) 100vw, 1100px"
+            width={2000}
+            height={1125}
+            sizes="(max-width: 1180px) 100vw, 1180px"
             className="article__cover-img"
             placeholder={article.cover.lqip ? "blur" : "empty"}
             blurDataURL={article.cover.lqip ?? undefined}
@@ -103,8 +115,18 @@ export default async function NewsArticlePage({
       )}
 
       {article.body && article.body.length > 0 && (
-        <NewsBody value={article.body} />
+        <div className="container article__body">
+          <NewsBody value={article.body} />
+        </div>
       )}
+
+      {/* At the end, not the top: a back link under the nav collided
+          with it, and Apple's newsroom puts the way out after the read. */}
+      <footer className="container article__foot">
+        <Link href="/news" className="article__back">
+          <span aria-hidden="true">←</span> All news
+        </Link>
+      </footer>
     </article>
   );
 }

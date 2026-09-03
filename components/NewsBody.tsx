@@ -1,27 +1,33 @@
 import Image from "next/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 
-import { urlFor } from "@/sanity/lib/image";
-
 /* Renderers for the block types the Studio can produce. Without these,
-   an image dropped into the body renders as nothing at all — Portable
-   Text has no default for custom types. */
+   an image placed in the body renders as nothing at all — Portable Text
+   has no default for custom types.
+
+   Body images deliberately sit at the text column's width, not the
+   cover's. One image leads the article; the rest support the reading. */
 const components: PortableTextComponents = {
   types: {
-    image: ({ value }) =>
-      value?.asset ? (
+    captionedImage: ({ value }) => {
+      const url: string | undefined = value?.url;
+      if (!url) return null;
+      return (
         <figure className="prose__figure">
           <Image
-            src={urlFor(value).width(1400).fit("max").url()}
+            src={url}
             alt={value.alt ?? ""}
             width={1400}
-            height={Math.round(1400 / 1.5)}
-            sizes="(max-width: 760px) 100vw, 70ch"
+            height={933}
+            sizes="(max-width: 800px) 100vw, 700px"
             className="prose__img"
+            placeholder={value.lqip ? "blur" : "empty"}
+            blurDataURL={value.lqip ?? undefined}
           />
           {value.caption && <figcaption>{value.caption}</figcaption>}
         </figure>
-      ) : null,
+      );
+    },
   },
   marks: {
     link: ({ value, children }) => {
