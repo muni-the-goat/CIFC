@@ -22,6 +22,18 @@ import { gsap } from "gsap";
    uncover runs when the new route commits. The covered screen hides the
    fetch instead of exposing it.
 
+   Why the listener is in the capture phase:
+
+   React attaches its delegated click handler to the root container
+   during hydration, which happens before this effect runs. A
+   bubble-phase listener on document therefore fires AFTER next/link's
+   onClick, which has already called preventDefault and started
+   navigating — so the handler saw defaultPrevented and bailed, and the
+   wipe never played at all. Capture runs ahead of React's delegation,
+   and stopPropagation on the clicks we take over keeps Link from
+   navigating a second time. Nav closes its menu on pathname change
+   rather than on click, so nothing downstream depends on that event.
+
    Safety contract — read before editing:
 
    Navigation must never depend on this animation. Every intercepted
@@ -121,6 +133,8 @@ export default function PageTransition() {
       if (animating.current) return;
 
       event.preventDefault();
+      /* We own this navigation now — keep it away from next/link. */
+      event.stopPropagation();
       animating.current = true;
       covered.current = true;
 
@@ -166,8 +180,8 @@ export default function PageTransition() {
       }
     }
 
-    document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
   }, [router, reduced]);
 
   return (
